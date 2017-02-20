@@ -1,0 +1,138 @@
+timestamp: 2016-08-17T14:04:23.076718
+CREATE TABLE cover(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512) UNIQUE,
+    quality CHAR(512),
+    contrast CHAR(512),
+    layout CHAR(512),
+    type CHAR(512),
+    language CHAR(512),
+    image CHAR(512)
+);
+success!
+timestamp: 2016-08-17T14:04:23.176693
+CREATE TABLE author(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cover_id INTEGER REFERENCES cover (id) ON DELETE CASCADE  ,
+    word CHAR(512),
+    pos CHAR(512),
+    iob CHAR(512),
+    layout CHAR(512),
+    font_type CHAR(512),
+    font_style CHAR(512),
+    font_size CHAR(512),
+    is_same_color CHAR(512)
+);
+success!
+timestamp: 2016-08-17T14:04:23.288382
+CREATE TABLE title(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cover_id INTEGER REFERENCES cover (id) ON DELETE CASCADE  ,
+    word CHAR(512),
+    pos CHAR(512),
+    iob CHAR(512),
+    layout CHAR(512),
+    font_type CHAR(512),
+    font_style CHAR(512),
+    font_size CHAR(512),
+    is_same_color CHAR(512)
+);
+success!
+timestamp: 2016-08-17T14:04:23.388860
+CREATE TABLE date(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cover_id INTEGER REFERENCES cover (id) ON DELETE CASCADE  ,
+    word CHAR(512),
+    pos CHAR(512),
+    iob CHAR(512),
+    layout CHAR(512),
+    font_type CHAR(512),
+    font_style CHAR(512),
+    font_size CHAR(512),
+    is_same_color CHAR(512)
+);
+success!
+timestamp: 2016-08-17T14:04:23.489996
+CREATE TABLE publisher(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cover_id INTEGER REFERENCES cover (id) ON DELETE CASCADE  ,
+    word CHAR(512),
+    pos CHAR(512),
+    iob CHAR(512),
+    layout CHAR(512),
+    font_type CHAR(512),
+    font_style CHAR(512),
+    font_size CHAR(512),
+    is_same_color CHAR(512)
+);
+success!
+timestamp: 2016-08-17T14:04:23.590389
+CREATE TABLE description(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cover_id INTEGER REFERENCES cover (id) ON DELETE CASCADE  ,
+    word CHAR(512),
+    pos CHAR(512),
+    iob CHAR(512),
+    layout CHAR(512),
+    font_type CHAR(512),
+    font_style CHAR(512),
+    font_size CHAR(512),
+    is_same_color CHAR(512)
+);
+success!
+timestamp: 2016-08-17T14:04:23.692821
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    username CHAR(128),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2016-08-17T14:04:23.821057
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-08-17T14:04:23.958950
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-17T14:04:24.081858
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-08-17T14:04:24.183436
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-08-17T14:04:24.283582
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!

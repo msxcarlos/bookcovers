@@ -1,0 +1,57 @@
+{{extend 'layout.html'}}
+
+<link href="{{=URL('static', 'css/bookcovers.css')}}" rel="stylesheet" type="text/css" />
+
+{{if any (k in request.args for k in ('title.cover_id','author.cover_id', 'date.cover_id', 'publisher.cover_id', 'description.cover_id')):}}
+	<h1>Portada: {{=cover.name}}</h1>
+	<div style="width:40%; float:left">
+		<table class="tableWithBackground" width="500px" height="600px" border="1" bordercolor=yellow>
+			<tr>
+			  <td width="33%" height="33%" align="center">
+			  	<img class="tableBackground" src="{{=URL('download', args=cover.image)}}" />
+			  	<font color="yellow">FLS</font>
+			  </td>
+			  <td width="33%" height="33%" align="center">
+			  	<font color="yellow">PS</font>
+			  </td>
+			  <td width="33%" height="33%" align="center">
+			  	<font color="yellow">FLE</font>
+			  </td>
+			</tr>
+			<tr>
+			  <td width="33%" height="33%" align="center">
+			  	<font color="yellow">LS</font>
+			  </td>
+			  <td width="33%" height="33%" align="center">
+			  	<font color="yellow">C</font>
+			  </td>
+			  <td width="33%" height="33%" align="center">
+			  	<font color="yellow">LE</font>
+			  </td>
+			</tr>
+			<tr>
+			  <td width="33%" height="33%" align="center">
+			  	<font color="yellow">LLS</font>
+			  </td>
+			  <td width="33%" height="33%" align="center">
+			  	<font color="yellow">PE</font>
+			  </td>
+			  <td width="33%" height="33%" align="center">
+			  	<font color="yellow">LLE</font>
+			  </td>
+			</tr>
+		</table>
+		<p><br>FLS:Inicio de primera línea, PS:Inicio de página, FLE:Fin de primera línea,<br>
+		LS:Inicio de línea, C:Centro, LE:Fin de línea,<br>
+		LLS:Inicio de última línea, PE:Fin de página, LLE:Fin de última línea</p>
+	</div>
+	<div style="width:60%; float:right">
+		<h2>Edición de datos</h2>
+		{{=grid}}
+	</div>
+{{else:}}
+	<h1>Portadas actuales</h1>
+	<h2>Edición de datos</h2>
+	{{=grid}}
+{{pass}}
+

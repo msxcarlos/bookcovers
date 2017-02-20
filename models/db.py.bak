@@ -1,0 +1,89 @@
+db = DAL("sqlite://storage.sqlite")
+
+db.define_table('cover',
+   Field('name', unique=True, label='Nombre la portada'),
+   Field('quality', label='Calidad de la imagen'),
+   Field('contrast', label='Variación del color'),
+   Field('layout', label='Diseño'),
+   Field('type', label='Tipo de documento'),
+   Field('language', label='Idioma'),
+   Field('image', 'upload', label='Imagen'),
+   format = '%(name)s')
+
+db.define_table('author',
+   Field('cover_id', 'reference cover'),
+   Field('word'),
+   Field('pos'),
+   Field('iob'),
+   Field('layout'),
+   Field('font_type'),
+   Field('font_style'),
+   Field('font_size'),
+   Field('is_same_color'))
+
+db.define_table('title',
+   Field('cover_id', 'reference cover'),
+   Field('word'),
+   Field('pos'),
+   Field('iob'),
+   Field('layout'),
+   Field('font_type'),
+   Field('font_style'),
+   Field('font_size'),
+   Field('is_same_color'))
+
+db.define_table('date',
+   Field('cover_id', 'reference cover'),
+   Field('word'),
+   Field('pos'),
+   Field('iob'),
+   Field('layout'),
+   Field('font_type'),
+   Field('font_style'),
+   Field('font_size'),
+   Field('is_same_color'))
+
+db.define_table('publiser',
+   Field('cover_id', 'reference cover'),
+   Field('word'),
+   Field('pos'),
+   Field('iob'),
+   Field('layout'),
+   Field('font_type'),
+   Field('font_style'),
+   Field('font_size'),
+   Field('is_same_color'))
+
+db.define_table('description',
+   Field('cover_id', 'reference cover'),
+   Field('word'),
+   Field('pos'),
+   Field('iob'),
+   Field('layout'),
+   Field('font_type'),
+   Field('font_style'),
+   Field('font_size'),
+   Field('is_same_color'))
+
+
+db.cover.name.requires = IS_NOT_IN_DB(db, db.cover.name)
+db.cover.quality.requires = IS_IN_SET({'G':'Buena','R':'Regular','P':'Mala'},zero=None)
+db.cover.contrast.requires = IS_IN_SET({'H':'Alto','M':'Medio','B':'Bajo'},zero=None)
+db.cover.layout.requires = IS_IN_SET({'C':'Complejo','N':'Normal','S':'Simple'},zero=None)
+db.cover.type.requires = IS_IN_SET({'B':'Libro','M':'Revista','T':'Tesis'},zero=None)
+db.cover.language.requires = IS_IN_SET({'S':'Español','E':'Inglés','O':'Otro'},zero=None)
+
+db.author.cover_id.requires = IS_IN_DB(db, db.cover.id, '%(name)s')
+db.author.word.requires = IS_NOT_EMPTY()
+db.author.pos.requires = IS_IN_SET({'NOUN':'Sustantivo','VERB':'Verbo','ADJ':'Adjetivo','ADV':'Adverbio','PRON':'Pronombre','DET':'Determinante o Artículo','ADP':'Preposición o Postposición','NUM':'Número','CONJ':'Conjunción','PRT':'Partícula','.':'Puntuación','X':'Otro'},zero=None)
+db.author.iob.requires = IS_IN_SET({'I':'Dentro','O':'Otro','B':'Inicio'},zero=None)
+db.author.layout.requires = IS_IN_SET({'FLS':'Inicio de primera línea','PS':'Inicio de página','FLE':'Fin de primera línea','LS':'Inicio de línea','C':'Centro','LE':'Fin de línea','LLS':'Inicio de última línea','PE':'Fin de página','LLE':'Fin de última línea'},zero=None)
+db.author.font_type.requires = IS_IN_SET({'A':'Artistica','H':'Manuscrita','P':'Molde'},zero=None)
+db.author.font_style.requires = IS_IN_SET({'N':'Normal','B':'Negrita','I':'Cursiva'},zero=None)
+db.author.font_size.requires = IS_IN_SET({'S':'Pequeña','M':'Mediana','B':'Grande','H':'Enorme'},zero=None)
+db.author.is_same_color.requires = IS_IN_SET({'T':'Sí','F':'No'},zero=None)
+db.author.cover_id.writable = db.author.cover_id.readable = False
+
+from gluon.tools import Auth
+auth = Auth(db)
+auth.define_tables(username=True)
